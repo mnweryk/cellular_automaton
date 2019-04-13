@@ -1,6 +1,6 @@
 import numpy as np
-
-rule = 220
+import matplotlib.pyplot as plt
+from jsonReader import JsonReader
 
 
 def to_bin(x):
@@ -37,12 +37,13 @@ def set_cell(string_number, sample):
         return 0
 
 
+reader = JsonReader()
+rule = reader.rule
 sample = to_reversed_array(to_bin(rule))  # array of reversed binary number
 
 # ****************CREATING TAB****************
-rows = 16
-columns = 31
-
+rows = reader.rows
+columns = reader.columns
 automat = np.zeros((rows, columns), int)
 automat[0][int(columns / 2)] = 1
 # ********************************************
@@ -58,3 +59,7 @@ for i in range(1, rows):
         else:
             tmp = str(automat[i-1][j-1]) + str(automat[i-1][j]) + str(automat[i-1][j+1])
             automat[i][j] = set_cell(tmp, sample)
+
+plt.imshow(automat)
+plt.show()
+a =3
