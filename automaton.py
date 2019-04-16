@@ -37,29 +37,35 @@ def set_cell(string_number, sample):
         return 0
 
 
-reader = JsonReader()
-rule = reader.rule
-sample = to_reversed_array(to_bin(rule))  # array of reversed binary number
+def draw(automat):
+    plt.imshow(automat)
+    plt.savefig("res/image.png")
 
-# ****************CREATING TAB****************
-rows = reader.rows
-columns = reader.columns
-automat = np.zeros((rows, columns), int)
-automat[0][int(columns / 2)] = 1
-# ********************************************
 
-for i in range(1, rows):
-    for j in range(0, columns):
-        if j == 0:
-            tmp = str(automat[i - 1][columns - 1]) + str(automat[i - 1][j]) + str(automat[i - 1][j + 1])
-            automat[i][j] = set_cell(tmp, sample)
-        elif j == columns - 1:
-            tmp = str(automat[i - 1][j - 1]) + str(automat[i - 1][j]) + str(automat[i - 1][0])
-            automat[i][j] = set_cell(tmp, sample)
-        else:
-            tmp = str(automat[i-1][j-1]) + str(automat[i-1][j]) + str(automat[i-1][j+1])
-            automat[i][j] = set_cell(tmp, sample)
+def count():
+    reader = JsonReader()
+    reader.read_data()
+    rule = reader.rule
+    sample = to_reversed_array(to_bin(rule))  # array of reversed binary number
 
-plt.imshow(automat)
-plt.show()
-a =3
+    # ****************CREATING TAB****************
+    rows = reader.rows
+    columns = reader.columns
+    automat = np.zeros((rows, columns), int)
+    automat[0][int(columns / 2)] = 1
+    # ********************************************
+
+    for i in range(1, rows):
+        for j in range(0, columns):
+            if j == 0:
+                tmp = str(automat[i - 1][columns - 1]) + str(automat[i - 1][j]) + str(automat[i - 1][j + 1])
+                automat[i][j] = set_cell(tmp, sample)
+            elif j == columns - 1:
+                tmp = str(automat[i - 1][j - 1]) + str(automat[i - 1][j]) + str(automat[i - 1][0])
+                automat[i][j] = set_cell(tmp, sample)
+            else:
+                tmp = str(automat[i-1][j-1]) + str(automat[i-1][j]) + str(automat[i-1][j+1])
+                automat[i][j] = set_cell(tmp, sample)
+    draw(automat)
+
+count()
