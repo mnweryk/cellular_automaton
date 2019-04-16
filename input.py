@@ -1,5 +1,4 @@
 from tkinter import *
-from jsonReader import JsonReader
 import automaton
 from PIL import ImageTk, Image
 
@@ -24,22 +23,20 @@ rule_entry.grid(row=1, column=2)
 
 img = ImageTk.PhotoImage(Image.open("res/blank_image.png"))
 panel = Label(screen, image=img)
-panel.grid(row=3,column = 0, columnspan = 3)
+panel.grid(row=3, column=0, columnspan=3)
 
 
 def callback():
-    write_to_JSON = JsonReader()
-    write_to_JSON.set_data(columns_entry.get(), rows_entry.get(), rule_entry.get())
-    automaton.count()
+    automaton.count(int(rows_entry.get()), int(columns_entry.get()), int(rule_entry.get()))
     img = Image.open("res/image.png")
     filename = ImageTk.PhotoImage(img)
-    canvas = Canvas(screen, height=640 , width=640)
-    canvas.image = filename  # <--- keep reference of your image
+    canvas = Canvas(screen, height=640, width=640)
+    canvas.image = filename
     canvas.create_image(0, 0, anchor='nw', image=filename)
-    canvas.grid(row=3,column = 0, columnspan = 3)
+    canvas.grid(row=3, column=0, columnspan=3)
 
 
-B = Button(screen, text ="draw!", command = callback)
+B = Button(screen, text="draw!", command=callback)
 B.grid(row=2, column=1)
 
 mainloop()

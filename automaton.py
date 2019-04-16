@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from jsonReader import JsonReader
 
 
 def to_bin(x):
@@ -11,7 +10,7 @@ def to_bin(x):
         difference = 8-len(tmp)
 
     zeros = ""
-    for i in range(0,difference):
+    for i in range(0, difference):
         zeros += "0"
 
     tmp = zeros+tmp
@@ -42,15 +41,10 @@ def draw(automat):
     plt.savefig("res/image.png")
 
 
-def count():
-    reader = JsonReader()
-    reader.read_data()
-    rule = reader.rule
+def count(rows, columns, rule):
     sample = to_reversed_array(to_bin(rule))  # array of reversed binary number
 
     # ****************CREATING TAB****************
-    rows = reader.rows
-    columns = reader.columns
     automat = np.zeros((rows, columns), int)
     automat[0][int(columns / 2)] = 1
     # ********************************************
@@ -67,5 +61,3 @@ def count():
                 tmp = str(automat[i-1][j-1]) + str(automat[i-1][j]) + str(automat[i-1][j+1])
                 automat[i][j] = set_cell(tmp, sample)
     draw(automat)
-
-count()
