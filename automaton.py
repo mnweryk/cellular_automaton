@@ -60,4 +60,5 @@ def count(rows, columns, rule):
             else:
                 tmp = str(automat[i-1][j-1]) + str(automat[i-1][j]) + str(automat[i-1][j+1])
                 automat[i][j] = set_cell(tmp, sample)
+
     draw(automat)
